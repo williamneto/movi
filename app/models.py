@@ -6,6 +6,7 @@ CATEGORIAS_MOVI = (
 	('Contato', 'Contato'),
 	('Movimento', 'Movimento'),
 	('Pauta', 'Pauta'),
+	('Midia', 'Evento'),
 )
 
 class Movi(models.Model):
@@ -16,7 +17,13 @@ class Movi(models.Model):
 		max_length=150
 	)
 	bairro = models.CharField(
-		max_length=150
+		max_length=150,
+		blank=True
+	)
+	end = models.CharField(
+		max_length=150,
+		default=None,
+		blank=True
 	)
 	categoria = models.CharField(
 		max_length=150, 
@@ -27,3 +34,18 @@ class Movi(models.Model):
 		max_length=150,
 		blank=True
 	)
+
+	def to_json(self):
+		data = {
+			"nome": self.nome,
+			"cidade": self.cidade,
+			"bairro": self.bairro,
+			"end": self.end,
+			"categoria": self.categoria,
+			"tel": self.tel
+		}
+
+		return data
+
+	def __unicode__(self):
+		return self.nome
