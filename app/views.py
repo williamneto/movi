@@ -4,26 +4,32 @@ import json
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 
-from models import Movi
-from forms import AddMoviForm
+from models import Movi, Nota
+from forms import AddMoviForm, AddNotaForm
 
 class IndexView(TemplateView):
 	template_name = "index.html"
-	get_services = ('get_movi_data', )
+	get_services = ('get_movi_data', 'drop_movi')
 
 	def get_context_data(self, *args, **kwargs):
 		ctx = super(IndexView, self).get_context_data(*args, **kwargs)
 
 		ctx['form'] = AddMoviForm()
+		ctx['nota_form'] = AddNotaForm()
 		ctx['movi_data'] = Movi.objects.all()
+		ctx['notas'] = Nota.objects.all()
 
 		return ctx
 
 	def post(self, request, *args, **kwargs):
 		ctx = self.get_context_data()
 
-		form = AddMoviForm(self.request.POST)
-		form.save()
+		if self.request.POST.get('nome'):
+			form = AddMoviForm(self.request.POST)
+			form.save()
+		else:
+			form = AddNotaForm(self.request.POST)
+			form.save()
 
 		return super(TemplateView, self).render_to_response(ctx)
 
@@ -45,3 +51,12 @@ class IndexView(TemplateView):
 			movi_data.append(o.to_json())
 
 		return JsonResponse(movi_data, safe=False)
+
+	def _drop_movi(self):
+		ctx = self.get_context_data()
+
+		movi = Movi.objects.get(id=self.request.GET.get('id'))
+		movi.delete()
+
+		return super(TemplateView, self).render_to_response(ctx)
+

@@ -8,7 +8,7 @@
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="inner">
 							<h1>Movi</h1>
-							<p>Aplicação de recensamento de movimento sociais, pautas de reinvindicações e eventos baseada em geolocalização.</p>
+							<p>Aplicação de registro de movimento sociais, eventos e notas baseada em geolocalização.</p>
 							<ul class="actions">
 								<li><a href="#one" class="button scrolly">Ver mapa</a></li>
 							</ul>
@@ -24,11 +24,35 @@
 							async defer></script>
         					
 						</section>
+						{% for movi in movi_data %}
+						<div class="modal fade" id="movi_{{ movi.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        
+						        <h4 class="" id="myModalLabel">{{ movi.categoria }} | {{ movi.nome }}</h4>
+						      </div>
+						      <div class="modal-body">
+						      {% for n in notas %}
+						      {% if n.related_to == movi %}
+						      	{{ n.titulo }}
+						      {% endif %}
+						      {% endfor %}						        
+						      </div>
+						      <div class="modal-footer">
+						      	
+						      	<button type="button" class="button" id="modal_{{ movi.id }}_notes">Notas relacionadas</button>
+						      	<button type="button" class="button movi_drop" id="{{ movi.id }}">Excluir</button>
+						       	<button type="button" class="button" data-dismiss="modal">Fechar</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						{% endfor %}					
 					</section>
 
 				
 
-				<!-- Three -->
 					<section id="two" class="wrapper style1 fade-up">
 						<div class="inner">
 							<h2>Adicionar informação</h2>
@@ -42,22 +66,23 @@
 											<input type="text" name="nome" id="id_nome" />
 										</div>
 										<div class="field half">
-											<label for="cidade">Cidade</label>
-											<input type="text" name="cidade" id="id_cidade" />
-										</div>
-										<div class="field">
-											<label for="bairro">Bairro</label>
-											<input type="text" name="bairro" id="id_bairro" />
-										</div>
-										<div class="field">
-											<label for="end">Endereço</label>
-											<input type="text" name="end" id="id_end" />
-										</div>
-										<div class="field">
 											<label for="categoria">Categoria</label>
 											{{ form.categoria }}
 										</div>
-										<div class="field">
+										<div class="field half first">
+											<label for="cidade">Cidade</label>
+											<input type="text" name="cidade" id="id_cidade" />
+										</div>
+										<div class="field half">
+											<label for="bairro">Bairro</label>
+											<input type="text" name="bairro" id="id_bairro" />
+										</div>
+										<div class="field half first">
+											<label for="end">Endereço</label>
+											<input type="text" name="end" id="id_end" />
+										</div>
+
+										<div class="field half">
 											<label for="tel">Telefone de contato</label>
 											<input type="text" name="tel" id="id_tel" />
 										</div>
@@ -71,7 +96,60 @@
 						</div>
 					</section>
 
-			</div>
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Notas</h2>
+							<p>Adicione e reveja suas anotações</p>
+							<div class="style1">
+									<ul class="actions">
+										<li><a href="#" id="new_note" class="button" data-toggle="modal" data-target="#new_note_modal">Nova</a></li>
+									</ul>
+							</div>
+						</div>
+
+									<div class="modal fade" id="new_note_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+									  <div class="modal-dialog" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        
+									        <h4 class="" id="myModalLabel">Escrever nova nota</h4>
+									      </div>
+									      <div class="modal-body">
+									        <form method="post" action="." id="new_nota_form">
+												{% csrf_token %}
+												<div class="field">
+													<label for="titulo">Titulo</label>
+													<input type="text" name="titulo" id="id_titulo" />
+												</div>
+												<div class="field">
+													<label for="texto">Texto</label>
+													<textarea name="texto" id="id_texto" rows="5"></textarea>
+												</div>
+												<div class="field half">
+													<label for="categoria">Categoria</label>
+													{{ nota_form.categoria }}
+												</div>
+												<div class="field half first">
+													<label for="related_to">Relacionado à</label>
+													{{ nota_form.related_to }}
+												</div>
+												<ul class="actions">
+													<li><input type="submit" class="button submit" value="Salvar"></li>
+												</ul>
+										  	
+									      	</div>
+									      	<div class="modal-footer">
+									      		<ul class="actions">
+													<li><input type="submit" class="button submit" value="Salvar"></li>
+												</ul>
+									      	</div>
+									      	</form>
+									    </div>
+									  </div>
+									</div>					
+					</section>
+
+</div>
 
 		<!-- Footer -->
 			<footer id="footer" class="wrapper style1-alt">
