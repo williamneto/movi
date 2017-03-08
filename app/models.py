@@ -7,7 +7,7 @@ CATEGORIAS_MOVI = (
 	('Contato', 'Contato'),
 	('Movimento', 'Movimento'),
 	('Pauta', 'Pauta'),
-	('Midia', 'Evento'),
+	('Evento', 'Evento'),
 )
 
 CATEGORIAS_NOTA = (

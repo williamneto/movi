@@ -40,8 +40,6 @@
 						      {% endfor %}						        
 						      </div>
 						      <div class="modal-footer">
-						      	
-						      	<button type="button" class="button" id="modal_{{ movi.id }}_notes">Notas relacionadas</button>
 						      	<button type="button" class="button movi_drop" id="{{ movi.id }}">Excluir</button>
 						       	<button type="button" class="button" data-dismiss="modal">Fechar</button>
 						      </div>
@@ -133,14 +131,13 @@
 													<label for="related_to">Relacionado à</label>
 													{{ nota_form.related_to }}
 												</div>
-												<ul class="actions">
-													<li><input type="submit" class="button submit" value="Salvar"></li>
-												</ul>
 										  	
 									      	</div>
 									      	<div class="modal-footer">
+									      	
 									      		<ul class="actions">
 													<li><input type="submit" class="button submit" value="Salvar"></li>
+													<li><button type="button" class="button" data-dismiss="modal">Fechar</button></li>
 												</ul>
 									      	</div>
 									      	</form>
