@@ -2,27 +2,38 @@ var geocoder;
 var map;
 var markers = [];
 
-function geocodeAddress(geocoder, resultsMap, address, title, id) {
-  geocoder.geocode({'address': address}, function(results, status) {
+function markerClick(cidade) {
+      $.ajax({
+          url: ".",
+          type: "GET",
+          data: {"cmd": "get_movi_cidade", "cidade": cidade},
+          success: function(data){
+            $("#movi_data").html("");
+            for (i = 0; i < data.length; i++) {
+              var div = $("<div class='movi'></div>");
+              var h4 = $("<label>" + data[i].nome + "</label>");
+
+              div.append(h4);
+              $("#movi_data").append(div);
+
+            }
+          }
+      });
+}
+
+function geocodeAddress(geocoder, resultsMap, cidade) {
+  geocoder.geocode({'address': cidade}, function(results, status) {
     if (status === google.maps.GeocoderStatus.OK) {
       resultsMap.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
         map: resultsMap,
         position: results[0].geometry.location,
-        title: title
+        title: cidade
       });
 
       marker.addListener('click', function() {
-        map.setZoom(13);
-        map.setCenter(marker.getPosition());
-        $("#movi_"+id).modal();
+        markerClick(cidade);
       });
-
-      obj = {
-        'id': id,
-        'marker': marker
-      }
-      markers.push(obj)
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -62,12 +73,7 @@ $(document).ready(function(){
           success: function(data){
 
             for (var i = 0; i < data.length; i++){
-              if (data[i].cidade && data[i].bairro) {
-                ad = data[i].cidade + "," + data[i].bairro
-                geocodeAddress(geocoder, map, ad, data[i].nome, data[i].id)
-              } else {
-                geocodeAddress(geocoder, map, data[i].cidade, data[i].nome, data[i].id)
-              }
+              geocodeAddress(geocoder, map, data[i].cidade);
             }
           }
       });

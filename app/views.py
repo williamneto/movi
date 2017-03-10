@@ -9,7 +9,7 @@ from forms import AddMoviForm, AddNotaForm
 
 class IndexView(TemplateView):
 	template_name = "index.html"
-	get_services = ('get_movi_data', 'drop_movi')
+	get_services = ('get_movi_data', 'drop_movi', 'get_movi_cidade')
 
 	def get_context_data(self, *args, **kwargs):
 		ctx = super(IndexView, self).get_context_data(*args, **kwargs)
@@ -42,6 +42,15 @@ class IndexView(TemplateView):
 
 		return super(IndexView, self).get(*args, **kwargs)
 
+	def _get_movi_cidade(self):
+		cidade = self.request.GET['cidade']
+		movi_data = Movi.objects.all().filter(cidade=cidade)
+
+		json = []
+		for m in movi_data:
+			json.append(m.to_json())
+
+		return JsonResponse(json, safe=False)
 
 	def _get_movi_data(self):
 		objects = Movi.objects.all()

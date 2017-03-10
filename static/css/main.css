@@ -2926,16 +2926,16 @@
 	}
 
 		.split > * {
-			width: calc(50% - 2.5em);
+			width: calc(80% - 2.5em);
 		}
 
 		.split > :nth-child(2n - 1) {
-			padding-right: 2.5em;
+			padding-right: 1.5em;
 			border-right: solid 1px rgba(255, 255, 255, 0.15);
 		}
 
 		.split > :nth-child(2n) {
-			padding-left: 2.5em;
+			padding-left: 1.5em;
 		}
 
 		.split.style1 > :nth-child(2n - 1) {
@@ -2949,15 +2949,15 @@
 		@media screen and (max-width: 1680px) {
 
 			.split > * {
-				width: calc(50% - 2em);
+				width: calc(80% - 2em);
 			}
 
 			.split > :nth-child(2n - 1) {
-				padding-right: 2em;
+				padding-right: 1em;
 			}
 
 			.split > :nth-child(2n) {
-				padding-left: 2em;
+				padding-left: 1em;
 			}
 
 			.split.style1 > :nth-child(2n - 1) {

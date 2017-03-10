@@ -17,13 +17,21 @@
 
 				<!-- One -->
 					<section id="one" class="wrapper style2 spotlights">
-						<section>
-							<div id="map" style="width: 100%; height: 100%; position: absolute;"></div>
-							<script src="/static/js/map.js"></script>
-							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7g3wQAWtNEAvejp8sEy3TwaCHO7Rj-a8&callback=initMap"
-							async defer></script>
-        					
-						</section>
+							<div class="split style2">
+								<section>
+									<div id="map" style="width: 100%; height: 500px; "></div>
+									<script src="/static/js/map.js"></script>
+									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7g3wQAWtNEAvejp8sEy3TwaCHO7Rj-a8&callback=initMap"
+									async defer></script>
+								</section>
+								<section>
+									<h2>Movimentos</h2>
+									<p>Clique em uma marcação no mapa para obter informações</p>
+
+									<div id="movi_data"></div>
+								</section>
+							</div>
+        
 						{% for movi in movi_data %}
 						<div class="modal fade" id="movi_{{ movi.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
