@@ -41,7 +41,7 @@ service-identity==16.0.0
 six==1.10.0
 South==1.0.2
 static3==0.7.0
-Twisted==16.0.0
+Twisted==22.10.0
 tzlocal==1.2.2
 urllib3==1.13.1
 zope.interface==4.1.3
